@@ -78,12 +78,45 @@ const login = (uid, pswd) => {
     }
   })
 
+}
 
+//add event
+
+const addEvent = (req,date,message) => {
+  
+  let currentUid = req.currentUid
+  return db.User.findOne({
+    uid:currentUid
+  }).then(user => {
+    if (user) {
+      console.log(user);
+      user.transaction.push({
+     date : date,
+     message : message
+    })
+   user.save()
+      return{
+        status: true,
+        message: "Event added successfully",
+        statusCode: 200
+      }
+    }
+    else {
+      return {
+        status: false,
+        message: "Invalid Credetials !",
+        statusCode: 401
+      }
+
+    }
+  })
 
 }
-  
+
+
   module.exports = {
     register,
     login,
+    addEvent
     
   }

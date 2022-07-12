@@ -62,6 +62,16 @@ app.post('/login', (req, res) => {
 
 })
 
+//Add event API
+
+app.post('/addEvent', jwtMiddleware, (req, res) => {
+    //event solving
+    dataService.addEvent(req, req.body.date, req.body.message, )
+    .then(result => {
+        res.status(result.statusCode).json(result)
+
+    })
+})
 
 
 app.listen(3000, () => {
