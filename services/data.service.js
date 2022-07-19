@@ -80,7 +80,7 @@ const login = (uid, pswd) => {
 
 }
 
-//add event
+//add event asynchronous
 
 const addEvent = (req,date,message) => {
   
@@ -113,10 +113,59 @@ const addEvent = (req,date,message) => {
 
 }
 
+//veiw event asynchronous
+
+const veiwEvent = (uid) => {
+  return db.User.findOne({
+    uid
+  }).then (user=>{
+    if(user){
+      return {
+        status: true,
+        statusCode: 200,
+        transaction:user.transaction
+  
+      }
+    }
+    else{
+      return {
+        status: false,
+        message: "User does not exist",
+        statusCode: 401
+  
+      }
+    }
+  })
+  
+  }
+
+//delete account
+
+const deleteAcc = (uid)=> {
+  return db.User.deleteOne({
+    uid
+  }).then(user=>{
+    if(!user){
+      return {
+        status: false,
+        message: "Operation failed",
+        statusCode: 401
+  
+      }
+    }
+    return{
+      status: true,
+      statusCode: 200,
+      message: 'Successfully deleted'
+    }
+  })
+}
 
   module.exports = {
     register,
     login,
-    addEvent
+    addEvent,
+    veiwEvent,
+    deleteAcc
     
   }

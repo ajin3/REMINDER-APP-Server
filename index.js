@@ -73,6 +73,28 @@ app.post('/addEvent', jwtMiddleware, (req, res) => {
     })
 })
 
+//Veiw event API
+
+app.post('/veiwEvent', jwtMiddleware, (req, res) => {
+    //transaction solving
+    dataService.veiwEvent(req.body.uid)
+    .then(result => {
+        res.status(result.statusCode).json(result)
+
+    })
+})
+
+
+
+//Delete Acc API
+app.delete('/deleteAcc/:uid',jwtMiddleware,(req, res) => {
+    //delete solving
+    dataService.deleteAcc(req.params.uid)
+    .then(result => {
+    res.status(result.statusCode).json(result)
+
+    })
+})
 
 app.listen(3000, () => {
     console.log("SERVER STARTED AT 3000");
